@@ -1,20 +1,50 @@
 
+## video process
+
+1. review docuement
+2. create models test
+3. create modesl
+4. create functions test
+5. create functions
+
+## payment flow
+```mermaid
+sequenceDiagram
+    title Payment Flow
+    participant client browser
+    participant appServer
+    participant payment gatway
+    participant shaparak
+
+    client browser->>appServer: request payment
+
+    appServer->>appServer: check order
+    
+    rect rgb(200, 150, 255)
+        appServer->>+payment gatway: get payment token
+        payment gatway->>-appServer: get token response
+    end
+    
+    appServer->>appServer: store get token result
+
+    appServer->>client browser: shaparak url
+    client browser->>+shaparak: go to shaparak
+    shaparak->>shaparak: process cart info flow
+    shaparak->>-appServer: payment result on callback url
+    appServer->>client browser: navigate to receipt page
+    
+    rect rgb(200, 150, 255)
+        appServer->>+payment gatway: verify payment
+        payment gatway->>-appServer: verify payment result
+    end
+    appServer->>appServer: store payment verification result
+```
+
+
+
+## digram creation
+
+[mermaid](https://mermaid.js.org/syntax/sequenceDiagram.html)
+
 ## install jest
 1. npm install --save-dev jest
-
-# upgrade fandogh cli
-
-1. pip install fandogh_cli --upgrade
-
-# run service 
-1. fandogh login  --username mohsenxad --password ********
-1. fandogh login  --username ******** --password ********
-2. fandogh source run
-3. fandogh service logs -f --name payment-api
-
-
-# deploy proxy service
-1. fandogh login  --username mohsenxad --password ********
-2. fandogh managed-service deploy proxy 1 -c service_name=proxy
-3. fandogh service apply
-your proxy server IP address will be in 159.69.220.0/24 range
