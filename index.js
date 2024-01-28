@@ -1,34 +1,21 @@
-const API_PORT = 3000;
-const PACKAGE_NAME = 'api.payment';
+require('dotenv').config();
 
-var express = require('express');
-const { getToken } = require('./src/use-cases/getToken');
+const SEP_GET_TOKEN_URL = process.env.SEP_GET_TOKEN_URL;
+const SEP_TERMINAL_ID = process.env.SEP_TERMINAL_ID;
 
-
-
-var app = express();
-
-
-app.get('/', (req, res) => {
-    res.send(`${PACKAGE_NAME} : 👋`);
-})
-
-app.get('/getToken', async (req, res) => {
-    try {
-        const token = await getToken(12000, "1qaz@WSX2");    
-        res.send(token);
-    } catch (error) {
-        console.log(error.message);
-        res.send(error.message);
+const sepGateway = require('./src/use-cases')(
+    {
+        SEP_GET_TOKEN_URL: SEP_GET_TOKEN_URL,
+        SEP_TERMINAL_ID: SEP_TERMINAL_ID,
     }
-})
+);
 
-function processError(res, error){
-    console.log(error);
-    res.send("Some error");
-}
+console.log(sepGateway);
 
-app.listen(API_PORT,function(){
-    console.log('Init ' + PACKAGE_NAME + ' on ' + API_PORT);
-    console.log('Access URL : http://localhost:' + API_PORT);
-});
+sepGateway.getToken(
+    {
+        Amount:5000,
+        ResNum:"tR43",
+        RedirectURL:"heeloo.com"
+    }
+)

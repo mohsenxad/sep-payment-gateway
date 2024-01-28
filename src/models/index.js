@@ -8,9 +8,17 @@ const buildMakeReverseTransactionRequest = require('./src/reverseTransactionRequ
 const buildMakeReverseTransactionResponse = require('./src/reverseTransactionResponse');
 
 module.exports = function
-()
+(
     {
-        const makeGetTokenRequest = buildMakeGetTokenRequest();
+        SEP_TERMINAL_ID
+    }
+)
+    {
+        const makeGetTokenRequest = buildMakeGetTokenRequest(
+            {
+                SEP_TERMINAL_ID: SEP_TERMINAL_ID
+            }
+        );
         const makeGetTokenResponse = buildMakeGetTokenResponse();
 
         const makeVerifyTransactionRequest = buildMakeVerifyTransactionRequest();

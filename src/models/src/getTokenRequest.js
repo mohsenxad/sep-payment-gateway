@@ -27,6 +27,13 @@ module.exports = function buildMakeGetTokenRequest
             {
                 if
                 (
+                    !Amount
+                )
+                    {
+                        throw new Error('makeGetTokenRequest must have Amount.');
+                    }
+                else if
+                (
                     typeof Amount != "number"
                 )
                     {
@@ -49,31 +56,53 @@ module.exports = function buildMakeGetTokenRequest
                         throw new Error('makeGetTokenRequest must have RedirectURL.');
                     }
 
-                let jsonData = {
-                    action: "token",
-                    TerminalId: SEP_TERMINAL_ID,
-                    Amount: Amount,
-                    ResNum: ResNum,
-                    RedirectURL: RedirectURL,
-                    TokenExpiryInMin: TokenExpiryInMin
-                };
+                
 
-                if
-                (
-                    Wage  
-                )
+                
+
+                function toJson(){
+
+                    let jsonData = {
+                        action: "token",
+                        TerminalId: SEP_TERMINAL_ID,
+                        Amount: Amount,
+                        ResNum: ResNum,
+                        RedirectURL: RedirectURL,
+                        TokenExpiryInMin: TokenExpiryInMin
+                    };
+    
+                    if
+                    (
+                        Wage  
+                    )
+                        {
+                            jsonData.Wage = Wage
+                        }
+    
+                    if
+                    (
+                        CellNumber  
+                    )
+                        {
+                            jsonData.CellNumber = CellNumber
+                        }
+
+                    return jsonData;
+                }
+
+                function toString(){
+                    return `Amount:${Amount}| ResNum:${ResNum}|RedirectURL:${RedirectURL}| TokenExpiryInMin:${TokenExpiryInMin}`;
+                }
+
+                return Object.freeze(
                     {
-                        jsonData.Wage = Wage
+                        getAmount: () => Amount,
+                        getResNum: () => ResNum,
+                        getRedirectURL: () => RedirectURL,
+                        getTokenExpiryInMin: () => TokenExpiryInMin,
+                        toJson: toJson,
+                        toString: toString,
                     }
-
-                if
-                (
-                    CellNumber  
-                )
-                    {
-                        jsonData.CellNumber = CellNumber
-                    }
-
-                return jsonData;
+                );
             }
     }
