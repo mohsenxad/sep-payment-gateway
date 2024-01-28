@@ -16,6 +16,13 @@ module.exports = function buildMakeGetTokenResponse
                     {
                         throw new Error('makeGetTokenResponse>status must be number.')
                     }
+                else if 
+                (
+                    status != 1
+                )
+                    {
+                        throw new Error('makeGetTokenResponse>status must 1 for success.')
+                    }
 
                 if 
                 (
