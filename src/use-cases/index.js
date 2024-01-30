@@ -25,7 +25,8 @@ module.exports = function
 
         const services = Object.freeze(
             {
-                getToken
+                getToken: getToken,
+                makeGetTokenRequest: models.makeGetTokenRequest
             }
         );
 

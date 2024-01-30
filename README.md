@@ -1,4 +1,44 @@
 
+# پکیج اتصال به درگاه بانک سامان
+
+این ریپوزیتوری امکان اتصال به درگاه بانک سامان را ایجاد میکند.
+کدها با زبان جاواسکریپت پیاده سازی شده
+
+## نحوه ی نصب پکیج
+
+```
+npm i sep-payment-gatway -s
+```
+
+## نحوه ی استفاده از پیکج
+
+```
+require('dotenv').config();
+
+const SEP_GET_TOKEN_URL = process.env.SEP_GET_TOKEN_URL;
+const SEP_TERMINAL_ID = process.env.SEP_TERMINAL_ID;
+
+const sepGateway = require('./src/use-cases')(
+    {
+        SEP_GET_TOKEN_URL: SEP_GET_TOKEN_URL,
+        SEP_TERMINAL_ID: SEP_TERMINAL_ID,
+    }
+);
+
+const getTokenRequest = sepGateway.makeGetTokenRequest(
+    {
+        Amount:5000,
+        ResNum:"tR43",
+        RedirectURL:"<https://mohsenxad.ir/callbackUrl>"
+    }
+)
+
+sepGateway.getToken(
+    {
+        getTokenRequest: getTokenRequest
+    }
+);
+```
 ## video process
 
 1. review docuement

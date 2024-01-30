@@ -1,5 +1,5 @@
 {
-  "name": "payment",
+  "name": "sep-payment-gatway",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
