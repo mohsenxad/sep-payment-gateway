@@ -42,20 +42,22 @@ module.exports = function buildGetToken
 
         return async function getToken
         (
-            getTokenParams
+            {
+                getTokenRequest
+            }
         )
             {
                 if
                 (
-                    !getTokenParams
+                    !getTokenRequest
                 )
                     {
-                        throw new Error('getToken must have getTokenParams.');
+                        throw new Error('getToken must have getTokenRequest.');
                     }
 
                 const options = createRequest(
                     {
-                        getTokenParams: getTokenParams
+                        getTokenRequest: getTokenRequest
                     }
                 );
 

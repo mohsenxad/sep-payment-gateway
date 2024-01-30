@@ -12,10 +12,16 @@ const sepGateway = require('./src/use-cases')(
 
 console.log(sepGateway);
 
-sepGateway.getToken(
+const getTokenRequest = sepGateway.makeGetTokenRequest(
     {
         Amount:5000,
         ResNum:"tR43",
         RedirectURL:"heeloo.com"
     }
 )
+
+sepGateway.getToken(
+    {
+        getTokenRequest: getTokenRequest
+    }
+);

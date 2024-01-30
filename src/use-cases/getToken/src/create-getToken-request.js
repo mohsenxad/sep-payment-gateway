@@ -16,19 +16,17 @@ module.exports = function buildCreateGetTokenRequest
         return function createGetTokenRequest
         (
             {
-                getTokenParams
+                getTokenRequest
             }
         )
             {
                 if
                 (
-                    !getTokenParams
+                    !getTokenRequest
                 )
                     {
-                        throw new Error('createGetTokenRequest must have getTokenParams.');
+                        throw new Error('createGetTokenRequest must have getTokenRequest.');
                     }
-
-                const getTokenRequest = makeGetTokenRequest(getTokenParams);
 
                 const jsonData = getTokenRequest.toJson();
 
