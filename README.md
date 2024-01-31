@@ -4,6 +4,13 @@
 این ریپوزیتوری امکان اتصال به درگاه بانک سامان را ایجاد میکند.
 کدها با زبان جاواسکریپت پیاده سازی شده
 
+---
+**برای مطالعه ی جزئیات پیاده سازی صفحه ی ویکی را مشاهده کنید**
+
+[https://github.com/mohsenxad/sep-payment-gateway/wiki](https://github.com/mohsenxad/sep-payment-gateway/wiki)
+
+---
+
 ## نحوه ی نصب پکیج
 
 ```
