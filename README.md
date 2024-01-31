@@ -12,33 +12,72 @@ npm i sep-payment-gatway -s
 
 ## نحوه ی استفاده از پیکج
 
+### تعریف گیتوی سامان
+
 ```
 require('dotenv').config();
 
-const SEP_GET_TOKEN_URL = process.env.SEP_GET_TOKEN_URL;
 const SEP_TERMINAL_ID = process.env.SEP_TERMINAL_ID;
 
 const sepGateway = require('./src/use-cases')(
     {
-        SEP_GET_TOKEN_URL: SEP_GET_TOKEN_URL,
         SEP_TERMINAL_ID: SEP_TERMINAL_ID,
     }
 );
 
+console.log(sepGateway);
+```
+
+### نحوه ی دریافت توکن
+
+```
 const getTokenRequest = sepGateway.makeGetTokenRequest(
     {
         Amount:5000,
         ResNum:"tR43",
-        RedirectURL:"<https://mohsenxad.ir/callbackUrl>"
+        RedirectURL:"heeloo.com"
     }
-)
+);
 
-sepGateway.getToken(
+const getTokenResponse = await sepGateway.getToken(
     {
         getTokenRequest: getTokenRequest
     }
 );
 ```
+
+### نحوه ی تایید پرداخت
+
+```
+const verifyTransactionRequest = sepGateway.makeVerifyTransactionRequest(
+    {
+        RefNum:"fake_RefNum"
+    }
+);
+
+const verifyTransactionResponse = await sepGateway.verifyTransaction(
+    {
+        verifyTransactionRequest:verifyTransactionRequest
+    }
+);
+```
+
+### نحوه ی برگشت پرداخت
+
+```
+const reverseTransactionRequest = sepGateway.makeReverseTransactionRequest(
+    {
+        RefNum: "fake_RefNum"
+    }
+);
+
+const reverseTransactionResponse = await sepGateway.reverseTransaction(
+    {
+        reverseTransactionRequest: reverseTransactionRequest
+    }
+);
+```
+
 ## video process
 
 1. review docuement
