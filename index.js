@@ -18,8 +18,32 @@ const getTokenRequest = sepGateway.makeGetTokenRequest(
     }
 );
 
-sepGateway.getToken(
+const getTokenResponse = await sepGateway.getToken(
     {
         getTokenRequest: getTokenRequest
+    }
+);
+
+const verifyTransactionRequest = sepGateway.makeVerifyTransactionRequest(
+    {
+        RefNum:"fake_RefNum"
+    }
+);
+
+const verifyTransactionResponse = await sepGateway.verifyTransaction(
+    {
+        verifyTransactionRequest:verifyTransactionRequest
+    }
+);
+
+const reverseTransactionRequest = sepGateway.makeReverseTransactionRequest(
+    {
+        RefNum: "fake_RefNum"
+    }
+);
+
+const reverseTransactionResponse = await sepGateway.reverseTransaction(
+    {
+        reverseTransactionRequest: reverseTransactionRequest
     }
 );
