@@ -1,7 +1,10 @@
+const SEP_GET_TOKEN_URL = "https://sep.shaparak.ir/onlinepg/onlinepg";
+const SEP_VERIFY_TRANSACTION_URL = "https://sep.shaparak.ir/verifyTxnRandomSessionkey/ipg/VerifyTransaction";
+const SEP_REVERSE_TRANSACTION_URL = "https://sep.shaparak.ir/verifyTxnRandomSessionkey/ipg/ReverseTransaction"
+
 module.exports = function
 (
     {
-        SEP_GET_TOKEN_URL,
         SEP_TERMINAL_ID
     }
 )
@@ -18,15 +21,34 @@ module.exports = function
             {
                 httpClient: providers.httpClient.fetch,
                 SEP_GET_TOKEN_URL: SEP_GET_TOKEN_URL,
-                makeGetTokenRequest: models.makeGetTokenRequest,
                 makeGetTokenResponse:models.makeGetTokenResponse
             }
-        )
+        );
+
+        const { verifyTransaction } = require('./verify-transaction')(
+            {
+                httpClient: providers.httpClient.fetch,
+                makeVerifyTransactionResponse: models.makeVerifyTransactionResponse,
+                SEP_VERIFY_TRANSACTION_URL: SEP_VERIFY_TRANSACTION_URL
+            }
+        );
+
+        const { reverseTransaction } = require('./reverse-transaction')(
+            {
+                httpClient: providers.httpClient.fetch,
+                makeReverseTransactionResponse: models.makeReverseTransactionResponse,
+                SEP_REVERSE_TRANSACTION_URL: SEP_REVERSE_TRANSACTION_URL
+            }
+        );
 
         const services = Object.freeze(
             {
+                makeGetTokenRequest: models.makeGetTokenRequest,
                 getToken: getToken,
-                makeGetTokenRequest: models.makeGetTokenRequest
+                makeVerifyTransactionRequest: models.makeVerifyTransactionRequest,
+                verifyTransaction: verifyTransaction,
+                makeReverseTransactionRequest: models.makeReverseTransactionRequest,
+                reverseTransaction: reverseTransaction,
             }
         );
 

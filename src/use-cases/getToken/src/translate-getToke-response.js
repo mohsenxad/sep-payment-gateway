@@ -12,6 +12,7 @@ module.exports = function buildTranslateGetTokenResponse
             {
                 throw new Error('SEP|buildTranslateGetTokenResponse must have makeGetTokenResponse')
             }
+            
         return async function translateGetTokenResponse
         (
             {

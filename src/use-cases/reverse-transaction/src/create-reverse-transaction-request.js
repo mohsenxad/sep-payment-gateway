@@ -1,24 +1,22 @@
-module.exports = function buildCreateGetTokenRequest
+module.exports = function buildCreateReverseTransactionRequest
 ()
     {
-        
-
-        return function createGetTokenRequest
+        return function createReverseTransactionRequest
         (
             {
-                getTokenRequest
+                reverseTransactionRequest
             }
         )
             {
                 if
                 (
-                    !getTokenRequest
+                    !reverseTransactionRequest
                 )
                     {
-                        throw new Error('createGetTokenRequest must have getTokenRequest.');
+                        throw new Error('createReverseTransactionRequest must have reverseTransactionRequest.');
                     }
 
-                const jsonData = getTokenRequest.toJson();
+                const jsonData = reverseTransactionRequest.toJson();
 
                 const body = JSON.stringify(
                     jsonData
@@ -43,6 +41,7 @@ module.exports = function buildCreateGetTokenRequest
                 //     json: jsonData
                 // }
         
-                return options;   
+                return options; 
+                
             }
     }

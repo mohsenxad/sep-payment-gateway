@@ -60,39 +60,41 @@ module.exports = function buildMakeGetTokenRequest
 
                 
 
-                function toJson(){
+                function toJson()
+                    {
 
-                    let jsonData = {
-                        action: "token",
-                        TerminalId: SEP_TERMINAL_ID,
-                        Amount: Amount,
-                        ResNum: ResNum,
-                        RedirectURL: RedirectURL,
-                        TokenExpiryInMin: TokenExpiryInMin
-                    };
-    
-                    if
-                    (
-                        Wage  
-                    )
-                        {
-                            jsonData.Wage = Wage
-                        }
-    
-                    if
-                    (
-                        CellNumber  
-                    )
-                        {
-                            jsonData.CellNumber = CellNumber
-                        }
+                        let jsonData = {
+                            action: "token",
+                            TerminalId: SEP_TERMINAL_ID,
+                            Amount: Amount,
+                            ResNum: ResNum,
+                            RedirectURL: RedirectURL,
+                            TokenExpiryInMin: TokenExpiryInMin
+                        };
+        
+                        if
+                        (
+                            Wage  
+                        )
+                            {
+                                jsonData.Wage = Wage
+                            }
+        
+                        if
+                        (
+                            CellNumber  
+                        )
+                            {
+                                jsonData.CellNumber = CellNumber
+                            }
 
-                    return jsonData;
-                }
+                        return jsonData;
+                    }
 
-                function toString(){
-                    return `Amount:${Amount}| ResNum:${ResNum}|RedirectURL:${RedirectURL}| TokenExpiryInMin:${TokenExpiryInMin}`;
-                }
+                function toString()
+                    {
+                        return `Amount:${Amount}| ResNum:${ResNum}|RedirectURL:${RedirectURL}| TokenExpiryInMin:${TokenExpiryInMin}`;
+                    }
 
                 return Object.freeze(
                     {

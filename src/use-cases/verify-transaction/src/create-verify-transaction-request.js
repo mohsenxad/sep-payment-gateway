@@ -1,24 +1,22 @@
-module.exports = function buildCreateGetTokenRequest
+module.exports = function buildCreateVerifyTransactionRequest
 ()
     {
-        
-
-        return function createGetTokenRequest
+        return function createVerifyTransactionRequest
         (
             {
-                getTokenRequest
+                verifyTransactionRequest
             }
         )
             {
                 if
                 (
-                    !getTokenRequest
+                    !verifyTransactionRequest
                 )
                     {
-                        throw new Error('createGetTokenRequest must have getTokenRequest.');
+                        throw new Error('createVerifyTransactionRequest must have verifyTransactionRequest.');
                     }
 
-                const jsonData = getTokenRequest.toJson();
+                const jsonData = verifyTransactionRequest.toJson();
 
                 const body = JSON.stringify(
                     jsonData
@@ -43,6 +41,7 @@ module.exports = function buildCreateGetTokenRequest
                 //     json: jsonData
                 // }
         
-                return options;   
+                return options; 
+                
             }
     }
