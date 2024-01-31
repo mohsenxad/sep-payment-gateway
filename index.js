@@ -1,11 +1,9 @@
 require('dotenv').config();
 
-const SEP_GET_TOKEN_URL = process.env.SEP_GET_TOKEN_URL;
 const SEP_TERMINAL_ID = process.env.SEP_TERMINAL_ID;
 
 const sepGateway = require('./src/use-cases')(
     {
-        SEP_GET_TOKEN_URL: SEP_GET_TOKEN_URL,
         SEP_TERMINAL_ID: SEP_TERMINAL_ID,
     }
 );
@@ -18,7 +16,7 @@ const getTokenRequest = sepGateway.makeGetTokenRequest(
         ResNum:"tR43",
         RedirectURL:"heeloo.com"
     }
-)
+);
 
 sepGateway.getToken(
     {

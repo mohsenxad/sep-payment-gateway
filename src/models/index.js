@@ -21,10 +21,18 @@ module.exports = function
         );
         const makeGetTokenResponse = buildMakeGetTokenResponse();
 
-        const makeVerifyTransactionRequest = buildMakeVerifyTransactionRequest();
+        const makeVerifyTransactionRequest = buildMakeVerifyTransactionRequest(
+            {
+                SEP_TERMINAL_ID: SEP_TERMINAL_ID
+            }
+        );
         const makeVerifyTransactionResponse= buildMakeVerifyTransactionResponse();
 
-        const makeReverseTransactionRequest = buildMakeReverseTransactionRequest();
+        const makeReverseTransactionRequest = buildMakeReverseTransactionRequest(
+            {
+                SEP_TERMINAL_ID: SEP_TERMINAL_ID
+            }
+        );
         const makeReverseTransactionResponse= buildMakeReverseTransactionResponse();
 
         const services = Object.freeze(
@@ -35,7 +43,6 @@ module.exports = function
                 makeVerifyTransactionResponse,
                 makeReverseTransactionRequest,
                 makeReverseTransactionResponse
-
             }
         );
 

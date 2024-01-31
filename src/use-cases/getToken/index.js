@@ -9,17 +9,12 @@ module.exports  = function
     {
         httpClient,
         SEP_GET_TOKEN_URL,
-        makeGetTokenRequest,
         makeGetTokenResponse
     }
 )
     {
 
-        const createGetTokenRequest = buildCreateGetTokenRequest(
-            {
-                makeGetTokenRequest: makeGetTokenRequest
-            }
-        );
+        const createGetTokenRequest = buildCreateGetTokenRequest();
 
         const translateGetTokenResponse = buildTranslateGetTokenResponse(
             {
