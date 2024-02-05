@@ -10,40 +10,46 @@ const sepGateway = require('./src/use-cases')(
 
 console.log(sepGateway);
 
-const getTokenRequest = sepGateway.makeGetTokenRequest(
-    {
-        Amount:5000,
-        ResNum:"tR43",
-        RedirectURL:"heeloo.com"
-    }
-);
+// const getTokenRequest = sepGateway.makeGetTokenRequest(
+//     {
+//         Amount:5000,
+//         ResNum:"tR43",
+//         RedirectURL:"heeloo.com"
+//     }
+// );
 
-const getTokenResponse = await sepGateway.getToken(
-    {
-        getTokenRequest: getTokenRequest
-    }
-);
+// const getTokenResponse = await sepGateway.getToken(
+//     {
+//         getTokenRequest: getTokenRequest
+//     }
+// );
 
-const verifyTransactionRequest = sepGateway.makeVerifyTransactionRequest(
-    {
-        RefNum:"fake_RefNum"
-    }
-);
 
-const verifyTransactionResponse = await sepGateway.verifyTransaction(
-    {
-        verifyTransactionRequest:verifyTransactionRequest
-    }
-);
 
-const reverseTransactionRequest = sepGateway.makeReverseTransactionRequest(
-    {
-        RefNum: "fake_RefNum"
-    }
-);
+// const verifyTransactionRequest = sepGateway.makeVerifyTransactionRequest(
+//     {
+//         RefNum:"fake_RefNum"
+//     }
+// );
 
-const reverseTransactionResponse = await sepGateway.reverseTransaction(
-    {
-        reverseTransactionRequest: reverseTransactionRequest
-    }
-);
+// const verifyTransactionResponse = await sepGateway.verifyTransaction(
+//     {
+//         verifyTransactionRequest:verifyTransactionRequest
+//     }
+// );
+
+
+
+
+// const reverseTransactionRequest = sepGateway.makeReverseTransactionRequest(
+//     {
+//         RefNum: "fake_RefNum"
+//     }
+// );
+
+// const reverseTransactionResponse = await sepGateway.reverseTransaction(
+//     {
+//         reverseTransactionRequest: reverseTransactionRequest
+//     }
+// );
+

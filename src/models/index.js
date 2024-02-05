@@ -35,6 +35,12 @@ module.exports = function
         );
         const makeReverseTransactionResponse= buildMakeReverseTransactionResponse();
 
+        const { makeCallbackRequest } = require('./src/callbackRequest')(
+            {
+                TERMINAL_ID: SEP_TERMINAL_ID
+            }
+        );
+
         const services = Object.freeze(
             {
                 makeGetTokenRequest,
@@ -42,7 +48,8 @@ module.exports = function
                 makeVerifyTransactionRequest,
                 makeVerifyTransactionResponse,
                 makeReverseTransactionRequest,
-                makeReverseTransactionResponse
+                makeReverseTransactionResponse,
+                makeCallbackRequest
             }
         );
 
