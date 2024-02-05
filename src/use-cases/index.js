@@ -41,6 +41,8 @@ module.exports = function
             }
         );
 
+        const { processCallbackRequest } = require('./process-callback-request')();
+
         const services = Object.freeze(
             {
                 makeGetTokenRequest: models.makeGetTokenRequest,
@@ -49,6 +51,7 @@ module.exports = function
                 verifyTransaction: verifyTransaction,
                 makeReverseTransactionRequest: models.makeReverseTransactionRequest,
                 reverseTransaction: reverseTransaction,
+                processCallbackRequest: processCallbackRequest
             }
         );
 
