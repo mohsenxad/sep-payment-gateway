@@ -18,12 +18,12 @@ module.exports = function
             }
         );
 
-        const createVerifyTransactionRequest = buildCreateVerifyTransactionRequest();
+        //const createVerifyTransactionRequest = buildCreateVerifyTransactionRequest();
 
         const verifyTransaction = buildVerifyTransaction(
             {
-                createRequest: createVerifyTransactionRequest,
-                translateResponse: translateVerifyTransactionResponse,
+                // createRequest: createVerifyTransactionRequest,
+                // translateResponse: translateVerifyTransactionResponse,
                 httpClient: httpClient,
                 SEP_VERIFY_TRANSACTION_URL: SEP_VERIFY_TRANSACTION_URL
             }
@@ -31,7 +31,8 @@ module.exports = function
 
         const services = Object.freeze(
             {
-                verifyTransaction
+                verifyTransaction,
+                translateVerifyTransactionResponse
             }
         );
 

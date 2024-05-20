@@ -2,8 +2,6 @@ module.exports = function buildGetToken
 (
     {
         httpClient,
-        createRequest,
-        translateResponse,
         SEP_GET_TOKEN_URL
     }
 )
@@ -18,61 +16,34 @@ module.exports = function buildGetToken
 
         if
         (
-            !createRequest
-        )
-            {
-                throw new Error('buildGetToken must have createRequest.');
-            }
-
-        if
-        (
-            !translateResponse
-        )
-            {
-                throw new Error('buildGetToken must have translateResponse.');
-            }
-
-        if
-        (
             !SEP_GET_TOKEN_URL
         )
             {
                 throw new Error('buildGetToken must have SEP_GET_TOKEN_URL.');
             }
+            
 
         return async function getToken
         (
             {
-                getTokenRequest
+                httpClientOptions
             }
         )
             {
                 if
                 (
-                    !getTokenRequest
+                    !httpClientOptions
                 )
                     {
-                        throw new Error('getToken must have getTokenRequest.');
+                        throw new Error('getToken must have httpClientOptions.');
                     }
 
-                const options = createRequest(
-                    {
-                        getTokenRequest: getTokenRequest
-                    }
-                );
-
-                const response = await httpClient(
+                const httpClientResponse = await httpClient(
                     SEP_GET_TOKEN_URL,
-                    options
+                    httpClientOptions
                 );
         
-                const getTokenResponse = await translateResponse(
-                    {
-                        response: response
-                    }
-                );
-
-                return getTokenResponse;
+                return httpClientResponse;
 
             }
     }

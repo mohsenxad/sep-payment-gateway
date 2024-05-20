@@ -5,33 +5,43 @@ const SEP_REVERSE_TRANSACTION_URL = "https://sep.shaparak.ir/verifyTxnRandomSess
 module.exports = function
 (
     {
-        SEP_TERMINAL_ID
+        SEP_TERMINAL_ID,
+        isOrderShippable
     }
 )
     {
         const providers = require('../providers')();
 
-        const models = require('../models')(
-            {
-                SEP_TERMINAL_ID: SEP_TERMINAL_ID
-            }
-        )
-
-        const { getToken } = require('./getToken')(
+        const { getToken, translateGetTokenResponse } = require('./getToken')(
             {
                 httpClient: providers.httpClient.fetch,
                 SEP_GET_TOKEN_URL: SEP_GET_TOKEN_URL,
-                makeGetTokenResponse:models.makeGetTokenResponse
+                //makeGetTokenResponse:models.makeGetTokenResponse
             }
         );
 
-        const { verifyTransaction } = require('./verify-transaction')(
+        const { verifyTransaction, translateVerifyTransactionResponse } = require('./verify-transaction')(
             {
                 httpClient: providers.httpClient.fetch,
-                makeVerifyTransactionResponse: models.makeVerifyTransactionResponse,
-                SEP_VERIFY_TRANSACTION_URL: SEP_VERIFY_TRANSACTION_URL
+                SEP_VERIFY_TRANSACTION_URL: SEP_VERIFY_TRANSACTION_URL,
+                //makeVerifyTransactionResponse: models.makeVerifyTransactionResponse,
             }
         );
+
+        const models = require('../models')(
+            {
+                TERMINAL_ID: SEP_TERMINAL_ID,
+                getTokenFromApi: getToken,
+                verifyTransactionFromApi:verifyTransaction,
+                translateGetTokenResponse: translateGetTokenResponse,
+                translateVerifyTransactionResponse: translateVerifyTransactionResponse
+
+            }
+        );
+
+        
+
+        
 
         const { reverseTransaction } = require('./reverse-transaction')(
             {
@@ -41,7 +51,11 @@ module.exports = function
             }
         );
 
-        const { processCallbackRequest } = require('./process-callback-request')();
+        const { processCallbackRequest } = require('./process-callback-request')(
+            {
+                isOrderShippable: isOrderShippable
+            }
+        );
 
         const services = Object.freeze(
             {

@@ -2,34 +2,17 @@ module.exports = function buildReverseTransaction
 (
     {
         httpClient,
-        createRequest,
-        translateResponse,
         SEP_REVERSE_TRANSACTION_URL
     }
 )
     {
+
         if
         (
             !httpClient
         )
             {
                 throw new Error('buildReverseTransaction must have httpClient.');
-            }
-
-        if
-        (
-            !createRequest
-        )
-            {
-                throw new Error('buildReverseTransaction must have createRequest.');
-            }
-
-        if
-        (
-            !translateResponse
-        )
-            {
-                throw new Error('buildReverseTransaction must have translateResponse.');
             }
 
         if
@@ -43,35 +26,23 @@ module.exports = function buildReverseTransaction
         return async function reverseTransaction
         (
             {
-                reverseTransactionRequest
+                httpClientOptions
             }
         )
             {
                 if
                 (
-                    !reverseTransactionRequest
+                    !httpClientOptions
                 )
                     {
-                        throw new Error('reverseTransaction must have reverseTransactionRequest.');
+                        throw new Error('reverseTransaction must have httpClientOptions.');
                     }
 
-                const options = createRequest(
-                    {
-                        reverseTransactionRequest: reverseTransactionRequest
-                    }
-                );
-
-                const response = await httpClient(
-                    SEP_REVERSE_TRANSACTION_URL,
-                    options
-                );
-        
-                const reverseTransactionResponse = await translateResponse(
-                    {
-                        response: response
-                    }
-                );
-
-                return reverseTransactionResponse;
+                    const httpClientResponse = await httpClient(
+                        SEP_GET_TOKEN_URL,
+                        httpClientOptions
+                    );
+            
+                    return httpClientResponse;
             }
     }

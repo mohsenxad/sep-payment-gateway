@@ -7,39 +7,83 @@ const buildMakeVerifyTransactionResponse = require('./src/verifyTransactionRespo
 const buildMakeReverseTransactionRequest = require('./src/reverseTransactionRequest');
 const buildMakeReverseTransactionResponse = require('./src/reverseTransactionResponse');
 
+const buildMakeRefNum = require('./src/ref-num');
+
+const buildMakeVerifiedTransaction = require('./src/verifiedTransaction');
+
 module.exports = function
 (
     {
-        SEP_TERMINAL_ID
+        TERMINAL_ID,
+        getTokenFromApi,
+        verifyTransactionFromApi,
+        translateGetTokenResponse,
+        translateVerifyTransactionResponse
     }
 )
     {
-        const makeGetTokenRequest = buildMakeGetTokenRequest(
+
+        // function getTokenFromApi(options){
+        //     console.log(options);
+        // }
+
+        const makeRefNum = buildMakeRefNum();
+
+        const makeGetTokenResponse = buildMakeGetTokenResponse();
+
+        const makeVerifiedTransaction = buildMakeVerifiedTransaction(
             {
-                SEP_TERMINAL_ID: SEP_TERMINAL_ID
+                TERMINAL_ID: TERMINAL_ID,
+                makeReversedTransaction: makeReversedTransaction,
+                reverseTransaction: ()=>{},
+                translateVerifyTransactionResponse: ()=>{}
             }
         );
-        const makeGetTokenResponse = buildMakeGetTokenResponse();
+        
+        const makeGetTokenRequest = buildMakeGetTokenRequest(
+            {
+                TERMINAL_ID: TERMINAL_ID,
+                getTokenFromApi: getTokenFromApi,
+                translateGetTokenResponse: translateGetTokenResponse,
+                makeGetTokenResponse: makeGetTokenResponse
+            }
+        );
+        
 
         const makeVerifyTransactionRequest = buildMakeVerifyTransactionRequest(
             {
-                SEP_TERMINAL_ID: SEP_TERMINAL_ID
+                TERMINAL_ID: TERMINAL_ID,
+                makeRefNum: makeRefNum,
+                translateVerifyTransactionHttpResponse: translateVerifyTransactionResponse,
+                verifyTransactionFromApi: verifyTransactionFromApi
             }
         );
         const makeVerifyTransactionResponse= buildMakeVerifyTransactionResponse();
 
+
+
         const makeReverseTransactionRequest = buildMakeReverseTransactionRequest(
             {
-                SEP_TERMINAL_ID: SEP_TERMINAL_ID
+                TERMINAL_ID: TERMINAL_ID,
+                makeRefNum: makeRefNum
             }
         );
+
         const makeReverseTransactionResponse= buildMakeReverseTransactionResponse();
 
         const { makeCallbackRequest } = require('./src/callbackRequest')(
             {
-                TERMINAL_ID: SEP_TERMINAL_ID
+                TERMINAL_ID: TERMINAL_ID,
+                makeVerifiedTransaction: makeVerifiedTransaction
             }
         );
+
+        const { makeTransactionDetail } = require('./src/transaction-detail')(
+            {
+                TERMINAL_ID: TERMINAL_ID,
+                makeRefNum: makeRefNum
+            }
+        )
 
         const services = Object.freeze(
             {
@@ -49,7 +93,8 @@ module.exports = function
                 makeVerifyTransactionResponse,
                 makeReverseTransactionRequest,
                 makeReverseTransactionResponse,
-                makeCallbackRequest
+                makeCallbackRequest,
+                makeTransactionDetail
             }
         );
 

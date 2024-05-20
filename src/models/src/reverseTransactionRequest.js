@@ -1,16 +1,25 @@
 module.exports = function buildMakeReverseTransactionRequest
 (
     {
-        SEP_TERMINAL_ID
+        TERMINAL_ID,
+        makeRefNum
     }
 )
     {
         if
         (
-            !SEP_TERMINAL_ID
+            !TERMINAL_ID
         )
             {
-                throw new Error('buildMakeReverseTransactionRequest must have SEP_TERMINAL_ID.');
+                throw new Error('buildMakeReverseTransactionRequest must have TERMINAL_ID.');
+            }
+
+        if
+        (
+            !makeRefNum
+        )
+            {
+                throw new Error('buildMakeReverseTransactionRequest must have makeRefNum.');
             }
 
         return function makeReverseTransactionRequest
@@ -28,12 +37,18 @@ module.exports = function buildMakeReverseTransactionRequest
                         throw new Error('makeReverseTransactionRequest must have RefNum.');
                     }
 
+                const refNumObject = makeRefNum(
+                    {
+                        refNumValue: RefNum
+                    }
+                )
+
                 function toJson()
                 {
 
                     let jsonData = {
-                        RefNum: RefNum,
-                        TerminalId: SEP_TERMINAL_ID
+                        RefNum: refNumObject.getRefNum(),
+                        TerminalId: TERMINAL_ID
                     };
     
                     return jsonData;
@@ -41,12 +56,12 @@ module.exports = function buildMakeReverseTransactionRequest
 
                 function toString()
                     {
-                        return `RefNum:${RefNum}`;
+                        return `RefNum:${refNumObject.getRefNum()}`;
                     }
 
                 return Object.freeze(
                     {
-                        getRefNum: () => RefNum,
+                        getRefNum: () => refNumObject.getRefNum(),
                         toJson: toJson,
                         toString: toString,
                     }

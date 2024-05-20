@@ -2,8 +2,6 @@ module.exports = function buildVerifyTransaction
 (
     {
         httpClient,
-        createRequest,
-        translateResponse,
         SEP_VERIFY_TRANSACTION_URL
     }
 )
@@ -18,22 +16,6 @@ module.exports = function buildVerifyTransaction
 
         if
         (
-            !createRequest
-        )
-            {
-                throw new Error('buildVerifyTransaction must have createRequest.');
-            }
-
-        if
-        (
-            !translateResponse
-        )
-            {
-                throw new Error('buildVerifyTransaction must have translateResponse.');
-            }
-
-        if
-        (
             !SEP_VERIFY_TRANSACTION_URL
         )
             {
@@ -43,35 +25,24 @@ module.exports = function buildVerifyTransaction
         return async function verifyTransaction
         (
             {
-                verifyTransactionRequest
+                httpClientOptions
             }
         )
             {
                 if
                 (
-                    !verifyTransactionRequest
+                    !httpClientOptions
                 )
                     {
-                        throw new Error('verifyTransaction must have verifyTransactionRequest.');
+                        throw new Error('verifyTransaction must have httpClientOptions.');
                     }
 
-                const options = createRequest(
-                    {
-                        verifyTransactionRequest: verifyTransactionRequest
-                    }
-                );
-
-                const response = await httpClient(
+                const httpClientResponse = await httpClient(
                     SEP_VERIFY_TRANSACTION_URL,
-                    options
+                    httpClientOptions
                 );
         
-                const verifyTransactionResponse = await translateResponse(
-                    {
-                        response: response
-                    }
-                );
+                return httpClientResponse;
 
-                return verifyTransactionResponse;
             }
     }

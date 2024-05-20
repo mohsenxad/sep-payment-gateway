@@ -1,17 +1,46 @@
 module.exports = function buildMakeGetTokenRequest
 (
     {
-        SEP_TERMINAL_ID
+        TERMINAL_ID,
+        getTokenFromApi,
+        translateGetTokenResponse,
+        makeGetTokenResponse
     }
 )
     {
         if
         (
-            !SEP_TERMINAL_ID
+            !TERMINAL_ID
         )
             {
-                throw new Error('buildMakeGetTokenRequest must have SEP_TERMINAL_ID.');
+                throw new Error('buildMakeGetTokenRequest must have TERMINAL_ID.');
             }
+
+        if
+        (
+            !getTokenFromApi
+        )
+            {
+                throw new Error('buildMakeGetTokenRequest must have getTokenFromApi.');
+            }
+
+        if
+        (
+            !translateGetTokenResponse
+        )
+            {
+                throw new Error('buildMakeGetTokenRequest must have translateGetTokenResponse.');
+            }
+
+        if
+        (
+            !makeGetTokenResponse
+        )
+            {
+                throw new Error('buildMakeGetTokenRequest must have makeGetTokenResponse.');
+            }
+
+            
             
         return function makeGetTokenRequest
         (
@@ -25,6 +54,9 @@ module.exports = function buildMakeGetTokenRequest
             }
         )
             {
+
+                let token;
+
                 if
                 (
                     !Amount
@@ -65,7 +97,7 @@ module.exports = function buildMakeGetTokenRequest
 
                         let jsonData = {
                             action: "token",
-                            TerminalId: SEP_TERMINAL_ID,
+                            TerminalId: TERMINAL_ID,
                             Amount: Amount,
                             ResNum: ResNum,
                             RedirectURL: RedirectURL,
@@ -96,6 +128,81 @@ module.exports = function buildMakeGetTokenRequest
                         return `Amount:${Amount}| ResNum:${ResNum}|RedirectURL:${RedirectURL}| TokenExpiryInMin:${TokenExpiryInMin}`;
                     }
 
+                function getFetchOptions()
+                    {
+
+                        const body = JSON.stringify(
+                            toJson()
+                        );
+
+                        const headers = {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        };
+
+                
+                        const options= {
+                            method:"POST",
+                            headers: headers,
+                            body: body
+                        };
+
+                        return options;  
+                    }
+
+                const getToken = async ()=>
+                    {
+                        if
+                        (
+                            token
+                        )
+                            {
+                                return token;
+                            }
+                        else
+                            {   
+                                const getTokenFromApiResult = await getTokenFromApi(
+                                    {
+                                        httpClientOptions: getFetchOptions()
+                                    }
+                                );
+            
+                                const translateGetTokenResponseResult = await translateGetTokenResponse(
+                                    {
+                                        response: getTokenFromApiResult
+                                    }
+                                );
+            
+                                const makeGetTokenResponseResult = makeGetTokenResponse(translateGetTokenResponseResult);
+            
+                                token = makeGetTokenResponseResult.getToken();
+
+                                return token
+                            }
+                    
+                    };
+
+                const getGoToShaparakHTMLPage = async()=>
+                    {
+                        const token = await getToken();
+
+                        const content = `<!DOCTYPE html><html><head></head><body onload="document.getElementById('t').submit()"><form id='t' action="https://sep.shaparak.ir/OnlinePG/OnlinePG" method="post"><input type="hidden" name="Token" value="${token}" /></form></body></html>`;
+
+                        return content;
+                    };
+
+                const getGoToShaparakUrl = async()=>
+                    {
+                        const token = await getToken();
+
+                        const content = `https://sep.shaparak.ir/OnlinePG/SendToken?token=${token}`;
+
+                        return content;
+                    }
+
+
+
+
                 return Object.freeze(
                     {
                         getAmount: () => Amount,
@@ -104,6 +211,9 @@ module.exports = function buildMakeGetTokenRequest
                         getTokenExpiryInMin: () => TokenExpiryInMin,
                         toJson: toJson,
                         toString: toString,
+                        getToken: getToken,
+                        getGoToShaparakHTMLPage: getGoToShaparakHTMLPage,
+                        getGoToShaparakUrl: getGoToShaparakUrl
                     }
                 );
             }

@@ -8,25 +8,20 @@ module.exports  = function
 (
     {
         httpClient,
-        SEP_GET_TOKEN_URL,
-        makeGetTokenResponse
+        SEP_GET_TOKEN_URL
     }
 )
     {
 
-        const createGetTokenRequest = buildCreateGetTokenRequest();
+        // const createGetTokenRequest = buildCreateGetTokenRequest();
 
-        const translateGetTokenResponse = buildTranslateGetTokenResponse(
-            {
-                makeGetTokenResponse: makeGetTokenResponse
-            }
-        );
+        const translateGetTokenResponse = buildTranslateGetTokenResponse();
 
         const getToken = buildGetToken(
             {
                 httpClient: httpClient,
-                createRequest: createGetTokenRequest,
-                translateResponse: translateGetTokenResponse,
+                // createRequest: createGetTokenRequest,
+                // translateResponse: translateGetTokenResponse,
                 SEP_GET_TOKEN_URL: SEP_GET_TOKEN_URL
             }
         );
@@ -34,6 +29,7 @@ module.exports  = function
         const services = Object.freeze(
             {
                 getToken,
+                translateGetTokenResponse
             }
         );
 

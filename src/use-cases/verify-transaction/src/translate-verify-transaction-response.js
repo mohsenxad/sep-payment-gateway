@@ -1,18 +1,6 @@
 module.exports = function buildTranslateVerifyTransactionResponse
-(
+()
     {
-        makeVerifyTransactionResponse
-    }
-)
-    {
-        if
-        (
-            !makeVerifyTransactionResponse
-        )
-            {
-                throw new Error('SEP|buildTranslateVerifyTransactionResponse must have makeVerifyTransactionResponse')
-            }
-
         return async function translateVerifyTransactionResponse
         (
             {
@@ -37,6 +25,8 @@ module.exports = function buildTranslateVerifyTransactionResponse
 
                 const contentType = response.headers.get('content-type');
 
+                // check if the response is from SEP servers
+
                 if
                 (
                     contentType.includes('json')
@@ -55,30 +45,71 @@ module.exports = function buildTranslateVerifyTransactionResponse
                             {
                                 throw error; 
                             }
-        
+
                         if
                         (
-                            jsonResponse.status == 1 &&
-                            jsonResponse.token
+                            !jsonResponse.Success
                         )
                             {
-                                const getTokenResponse = makeGetTokenResponse(jsonResponse)
-                                return getTokenResponse;
-
+                                throw new Error('SEP|translateVerifyTransactionResponse jsonResponse must have Success.');
                             }
                         else if
                         (
-                            jsonResponse.status == -1 &&
-                            jsonResponse.errorCode &&
-                            jsonResponse.errorDesc 
+                            typeof jsonResponse.Success != "boolean"
                         )
                             {
-                                throw new Error(jsonResponse.errorDesc)
+                                throw new Error('SEP|translateVerifyTransactionResponse>jsonResponse> Success must bee boolean.');
+                            }
+
+                        if
+                        (
+                            !jsonResponse.ResultCode 
+                        )
+                            {
+                                throw new Error('SEP|translateVerifyTransactionResponse jsonResponse must have ResultCode.');
+                            }
+                        else if
+                        (
+                            typeof jsonResponse.ResultCode != "number"
+                        )
+                            {
+                                throw new Error('SEP|translateVerifyTransactionResponse>jsonResponse>ResultCode must bee number.');
+                            }
+
+                        if
+                        (
+                            jsonResponse.Success &&
+                            jsonResponse.ResultCode === 0
+                        )
+                            {
+                                // process success 
+                                if
+                                (   
+                                    !jsonResponse.TransactionDetail
+                                )
+                                    {
+                                        throw new Error('SEP|translateVerifyTransactionResponse>jsonResponse must have TransactionDetail.');
+                                    }
+                                else
+                                    {
+                                        return jsonResponse;
+                                    }
+                            }
+                        else if
+                        (
+                            !jsonResponse.Success &&
+                            jsonResponse.ResultCode !== 0 &&
+                            jsonResponse.ResultDescription
+                        )
+                            {
+                                const notVerifiedPaymentErrorMessage = `SEP|translateVerifyTransactionResponse not verified Payemnet | ${jsonResponse.ResultCode}| ${jsonResponse.ResultDescription}`;
+                                throw new Error(notVerifiedPaymentErrorMessage)
+
                             }
                         else
                             {
-                                const unknownResponseFromSEP = `SEP|translateVerifyTransactionResponse Unknown Response On Get Token ${JSON.stringify(response)}`;
-                                throw new Error(unknownResponseFromSEP);
+                                const unknownVerifyPaymentResponseErrorMessage = `SEP|translateVerifyTransactionResponse unknown Verify Transaction Response | ${JSON.stringify(jsonResponse)}`;
+                                throw new Error(unknownVerifyPaymentResponseErrorMessage)
                             }
                     }
                 else

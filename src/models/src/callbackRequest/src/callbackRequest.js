@@ -2,7 +2,10 @@ module.exports = function buildMakeCallbackRequest
 (
     {
         makeCallbackRequestHeaders,
-        makeCallbackRequestBody
+        makeCallbackRequestBody,
+        verifyTransactionFromApi,
+        makeVerifiedTransaction,
+        translateVerifyTransactionResponse
     }
 )
     {
@@ -22,52 +25,97 @@ module.exports = function buildMakeCallbackRequest
                 throw new Error('buildMakeCallbackRequest must have makeCallbackRequestBody.');
             }
 
+        if
+        (
+            !verifyTransactionFromApi
+        )
+            {
+                throw new Error('buildMakeCallbackRequest must have verifyTransactionFromApi.');
+            }
+
+        if
+        (
+            !makeVerifiedTransaction
+        )
+            {
+                throw new Error('buildMakeCallbackRequest must have makeVerifiedTransaction.');
+            }
+
+        if
+        (
+            !translateVerifyTransactionResponse
+        )
+            {
+                throw new Error('buildMakeCallbackRequest must have translateVerifyTransactionResponse.');
+            }
+
+            
+
         return function makeCallbackRequest
         (
             {
-                callbackHttpRequest
+                headers,
+                body
             }
         )
             {
                 if
                 (
-                    !callbackHttpRequest
+                    !headers
                 )
                     {
-                        throw new Error('makeCallbackRequest must have callbackHttpRequest.');
-                    }
-
-                else if
-                (
-                    !callbackHttpRequest.headers
-                )
-                    {
-                        throw new Error('makeCallbackRequest>callbackHttpRequest must have headers.');
-                    }
-                else if
-                (
-                    !callbackHttpRequest.body
-                )
-                    {
-                        throw new Error('makeCallbackRequest>callbackHttpRequest must have body.');
+                        throw new Error('makeCallbackRequest must have headers.');
                     }
                 
-                const requestHeaders = callbackHttpRequest.headers;
-                const requestBody = callbackHttpRequest.body;
-
+                if
+                (
+                    !body
+                )
+                    {
+                        throw new Error('makeCallbackRequest must have body.');
+                    }
+                
 
                 const callbackRequestHeaders = makeCallbackRequestHeaders(
                     {
-                        requestHeaders: requestHeaders
+                        requestHeaders: headers
                     }
                 );
 
                 const callbackRequestBody = makeCallbackRequestBody(
                     {
-                        requestBody: requestBody
+                        requestBody: body
                     }
                 );
 
-                
+
+                const verify = async()=>{
+                    
+                    const verifyTransactionFromApiResult = await verifyTransactionFromApi();
+
+                    const translateVerifyTransactionResponseResult = await translateVerifyTransactionResponse(
+                        {
+                            response: verifyTransactionFromApiResult
+                        }
+                    );
+
+                    const verifiedTransaction = makeVerifiedTransaction(
+                        {
+                            callbackRequest: this,
+                            verificationResult: translateVerifyTransactionResponseResult
+                        }
+                    );
+
+                    return verifiedTransaction;
+
+                }
+
+                return Object.freeze(
+                    {
+                        getCallbackRequestHeaders:() => callbackRequestHeaders,
+                        getCallbackRequestBody: () => callbackRequestBody,
+                        verify: ()=> verify
+                    }
+                );
             }
     }

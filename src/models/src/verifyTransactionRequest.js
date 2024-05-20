@@ -1,17 +1,54 @@
 module.exports = function buildMakeVerifyTransactionRequest
 (
     {
-        SEP_TERMINAL_ID
+        TERMINAL_ID,
+        verifyTransactionFromApi,
+        translateVerifyTransactionHttpResponse,
+        makeRefNum,
+        makeVerifyTransactionResponse
     }
 )
     {
         if
         (
-            !SEP_TERMINAL_ID
+            !TERMINAL_ID
         )
             {
-                throw new Error('buildMakeVerifyTransactionRequest must have SEP_TERMINAL_ID.');
+                throw new Error('buildMakeVerifyTransactionRequest must have TERMINAL_ID.');
             }
+
+        if
+        (
+            !verifyTransactionFromApi
+        )
+            {
+                throw new Error('buildMakeVerifyTransactionRequest must have verifyTransactionFromApi.');
+            }
+
+        if
+        (
+            !translateVerifyTransactionHttpResponse
+        )
+            {
+                throw new Error('buildMakeVerifyTransactionRequest must have translateVerifyTransactionHttpResponse.');
+            }
+            
+        if
+        (
+            !makeRefNum
+        )
+            {
+                throw new Error('buildMakeVerifyTransactionRequest must have makeRefNum.');
+            }
+
+        if
+        (
+            !makeVerifyTransactionResponse
+        )
+            {
+                throw new Error('buildMakeVerifyTransactionRequest must have makeVerifyTransactionResponse.');
+            }
+            
 
         return function makeVerifyTransactionRequest
         (
@@ -20,6 +57,8 @@ module.exports = function buildMakeVerifyTransactionRequest
             }
         )
             {
+                let verficationResult;
+
                 if
                 (
                     !RefNum
@@ -28,12 +67,18 @@ module.exports = function buildMakeVerifyTransactionRequest
                         throw new Error('makeVerifyTransactionRequest must have RefNum.');
                     }
 
+                const refNumObject = makeRefNum(
+                    {
+                        refNumValue: RefNum
+                    }
+                )
+
                 function toJson()
                 {
 
                     let jsonData = {
-                        RefNum: RefNum,
-                        TerminalId: SEP_TERMINAL_ID
+                        RefNum: refNumObject.getRefNum(),
+                        TerminalId: TERMINAL_ID
                     };
     
                     return jsonData;
@@ -41,14 +86,68 @@ module.exports = function buildMakeVerifyTransactionRequest
 
                 function toString()
                     {
-                        return `RefNum:${RefNum}`;
+                        return `RefNum:${refNumObject.getRefNum()}`;
+                    }
+
+                function getFetchOptions()
+                {
+
+                    const body = JSON.stringify(
+                        toJson()
+                    );
+
+                    const headers = {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    };
+
+            
+                    const options= {
+                        method:"POST",
+                        headers: headers,
+                        body: body
+                    };
+
+                    return options;  
+                }
+
+                const verify = async() =>
+                    {
+                        if
+                        (
+                            verficationResult
+                        )
+                            {
+                                return verficationResult;
+                            }
+                        else
+                            {   
+                                const verifyTransactionFromApiResult = await verifyTransactionFromApi(
+                                    {
+                                        httpClientOptions: getFetchOptions()
+                                    }
+                                );
+            
+                                const translateVerifyTransactionHttpResponseResult = await translateVerifyTransactionHttpResponse(
+                                    {
+                                        response: verifyTransactionFromApiResult
+                                    }
+                                );
+            
+                                const makeVerifyTransactionResponseResult = makeVerifyTransactionResponse(translateGetTokenResponseResult);
+            
+                                verficationResult = makeVerifyTransactionResponseResult;
+
+                                return token
+                            }
                     }
 
                 return Object.freeze(
                     {
-                        getRefNum: () => RefNum,
+                        getRefNum: () => refNumObject.getRefNum(),
                         toJson: toJson,
                         toString: toString,
+                        verify: verify
                     }
                 );
                 

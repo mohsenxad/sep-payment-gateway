@@ -43,6 +43,8 @@ module.exports = function buildMakeGetTokenResponse
                     return `status:${status}| token:${token}`;
                 }
 
+                
+
                 return Object.freeze(
                     {
                         getStatus: () => status,

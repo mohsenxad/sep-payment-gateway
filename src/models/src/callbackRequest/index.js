@@ -5,7 +5,8 @@ const buildMakeCallbackRequest= require('./src/callbackRequest');
 module.exports = function
 (
     {
-        TERMINAL_ID
+        TERMINAL_ID,
+        makeVerifiedTransaction
     }
 )
     {
@@ -21,7 +22,8 @@ module.exports = function
         const makeCallbackRequest = buildMakeCallbackRequest(
             {
                 makeCallbackRequestBody: makeCallbackRequestBody,
-                makeCallbackRequestHeaders: makeCallbackRequestHeaders
+                makeCallbackRequestHeaders: makeCallbackRequestHeaders,
+                makeVerifiedTransaction: makeVerifiedTransaction
             }
         );
 
