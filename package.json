@@ -1,12 +1,11 @@
 {
   "name": "sep-payment-gatway",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node sep-package.js",
-    "test": "jest",
-    "deploy": "fandogh source run"
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
