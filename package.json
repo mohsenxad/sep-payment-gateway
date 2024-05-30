@@ -4,22 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node sep-package.js",
     "test": "jest",
     "deploy": "fandogh source run"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "axios": "^0.27.2",
-    "dotenv": "^16.0.1",
-    "express": "^4.18.1",
-    "got": "^11.8.3",
-    "hpagent": "^1.0.0",
-    "node-fetch": "^2.6.7",
-    "request": "^2.88.2"
-  },
   "devDependencies": {
     "jest": "^28.1.2"
   }

@@ -126,7 +126,21 @@ sequenceDiagram
     appServer->>appServer: store payment verification result
 ```
 
+## imporovment
 
+TerminalId in getToken as string
+TerminalNumber in verfiy and reverse as number
+
+status in get token is 1 or -1 as boolean
+
+if a transaction reversed before: we get ResultCode as موفق but success as false
+what does this means
+
+## Entites
+
+1. invoice
+2. payment
+3. 
 
 ## digram creation
 
