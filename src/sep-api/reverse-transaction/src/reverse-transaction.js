@@ -1,7 +1,7 @@
 module.exports = function buildReverseTransaction
 (
     {
-        SEP_REVERSE_TRANSACTION_URL,
+        SEP_REVERSE_TRANSACTION_PATH,
         httpClientPostInterceptor,
         createReverseTransactionRequest,
         translateReverseTransactionResponse
@@ -10,10 +10,10 @@ module.exports = function buildReverseTransaction
     {
         if
         (
-            !SEP_REVERSE_TRANSACTION_URL
+            !SEP_REVERSE_TRANSACTION_PATH
         )
             {
-                throw new Error('buildReverseTransaction must have SEP_REVERSE_TRANSACTION_URL.');
+                throw new Error('buildReverseTransaction must have SEP_REVERSE_TRANSACTION_PATH.');
             }
             
         if
@@ -59,7 +59,7 @@ module.exports = function buildReverseTransaction
 
                 const { httpResponseJsonData, httpResponseHeaders } = await httpClientPostInterceptor(
                     {
-                        url: SEP_REVERSE_TRANSACTION_URL,
+                        path: SEP_REVERSE_TRANSACTION_PATH,
                         jsonData: reverseTransactionJsonData
                     }
                 );

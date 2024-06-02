@@ -5,10 +5,7 @@ const buildGetPaymentUrl = require('./get-payment-ulr');
 
 module.exports = function buildCreatePayment
 (
-    {
-        getTokenApi,
-        makeInvoice
-    }
+    getTokenApi
 )
     {
         if
@@ -19,20 +16,12 @@ module.exports = function buildCreatePayment
                 throw new Error('buildCreatePayment must have getTokenApi.');
             }
 
-        if
-        (
-            !makeInvoice
-        )
-            {
-                throw new Error('buildCreatePayment must have makeInvoice.');
-            }
-            
+           
         return async function createPayment
         (
-            invoiceInfo
+            invoice
         )
             {
-                const invoice = makeInvoice(invoiceInfo);
 
                 const { status, token } = await getTokenApi(
                     {

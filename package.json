@@ -1,10 +1,9 @@
 {
   "name": "sep-payment-gatway",
-  "version": "1.0.6",
-  "description": "",
+  "version": "1.0.7",
+  "description": "sep payment gatway",
   "main": "index.js",
   "scripts": {
-    "start": "node sep-package.js",
     "test": "jest"
   },
   "keywords": [],

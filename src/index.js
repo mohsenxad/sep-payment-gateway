@@ -11,8 +11,7 @@ module.exports = function
         const {createPayment, reversePayment, verifyPayment}= require('./use-cases')(
             {
                 customizedHTTPPostMethod: customizedHTTPPostMethod,
-                SEP_TERMINAL_ID: SEP_TERMINAL_ID,
-                makeInvoice: makeInvoice
+                SEP_TERMINAL_ID: SEP_TERMINAL_ID
             }
         );
 
@@ -20,7 +19,6 @@ module.exports = function
         const services = Object.freeze(
             {
                 makeInvoice,
-                makeRefNum,
                 createPayment,
                 reversePayment,
                 verifyPayment,

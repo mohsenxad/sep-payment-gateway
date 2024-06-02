@@ -1,8 +1,8 @@
 
 const SEP_HOST = 'sep.shaparak.ir';
 const SEP_GET_TOKEN_PATH = '/onlinepg/onlinepg';
-const SEP_VERIFY_TRANSACTION_URL= 'https://sep.shaparak.ir/verifyTxnRandomSessionkey/ipg/VerifyTransaction';
-const SEP_REVERSE_TRANSACTION_URL = 'https://sep.shaparak.ir/verifyTxnRandomSessionkey/ipg/ReverseTransaction';
+const SEP_VERIFY_TRANSACTION_PATH= '/verifyTxnRandomSessionkey/ipg/VerifyTransaction';
+const SEP_REVERSE_TRANSACTION_PATH = '/verifyTxnRandomSessionkey/ipg/ReverseTransaction';
 
 module.exports = function
 (
@@ -29,14 +29,14 @@ module.exports = function
 
         const verifyTransaction = require('./verify-transaction')(
             {
-                SEP_VERIFY_TRANSACTION_URL: SEP_VERIFY_TRANSACTION_URL,
+                SEP_VERIFY_TRANSACTION_PATH: SEP_VERIFY_TRANSACTION_PATH,
                 httpClientPostInterceptor: httpClientPostInterceptor
             }
         );
 
         const reverseTransaction = require('./reverse-transaction')(
             {
-                SEP_REVERSE_TRANSACTION_URL: SEP_REVERSE_TRANSACTION_URL,
+                SEP_REVERSE_TRANSACTION_PATH: SEP_REVERSE_TRANSACTION_PATH,
                 httpClientPostInterceptor: httpClientPostInterceptor
             }
         )

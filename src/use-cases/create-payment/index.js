@@ -2,17 +2,11 @@ const buildCreatePayment = require('./src/create-payment');
 
 module.exports = function
 (
-    {
-        getTokenApi,
-        makeInvoice
-    }
+    getTokenApi
 )
     {
         const createPayment = buildCreatePayment(
-            {
-                getTokenApi: getTokenApi,
-                makeInvoice: makeInvoice
-            }
+            getTokenApi
         );
 
         return createPayment;

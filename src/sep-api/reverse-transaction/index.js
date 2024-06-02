@@ -5,7 +5,7 @@ const buildReverseTransaction= require('./src/reverse-transaction');
 module.exports = function
 (
     {
-        SEP_REVERSE_TRANSACTION_URL,
+        SEP_REVERSE_TRANSACTION_PATH,
         httpClientPostInterceptor
     }
 )
@@ -14,7 +14,7 @@ module.exports = function
                 {
                     createReverseTransactionRequest: createReverseTransactionRequest,
                     httpClientPostInterceptor: httpClientPostInterceptor,
-                    SEP_REVERSE_TRANSACTION_URL: SEP_REVERSE_TRANSACTION_URL,
+                    SEP_REVERSE_TRANSACTION_PATH: SEP_REVERSE_TRANSACTION_PATH,
                     translateReverseTransactionResponse: translateReverseTransactionResponse
                 }
             );

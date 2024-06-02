@@ -24,11 +24,9 @@ npm i sep-payment-gatway -s
 ```
 require('dotenv').config();
 
-const SEP_TERMINAL_ID = process.env.SEP_TERMINAL_ID;
-
-const sepGateway = require('./src/use-cases')(
+const sepGateway = require('./src')(
     {
-        SEP_TERMINAL_ID: SEP_TERMINAL_ID,
+        SEP_TERMINAL_ID: process.env.SEP_TERMINAL_ID,
     }
 );
 
@@ -38,60 +36,34 @@ console.log(sepGateway);
 ### نحوه ی دریافت توکن
 
 ```
-const getTokenRequest = sepGateway.makeGetTokenRequest(
-    {
-        Amount:5000,
-        ResNum:"tR43",
-        RedirectURL:"heeloo.com"
-    }
-);
 
-const getTokenResponse = await sepGateway.getToken(
+const invoice = sepGateway.makeInvoice(
     {
-        getTokenRequest: getTokenRequest
+        Amount:1000,
+        RedirectURL:'https://<YOUR_SITE_HOST.IR>/<CALL_BACK_PAHT>',
+        ResNum:`SEP_TEST_PAYMENT_${Math.floor(Math.random() * 999)}`,
     }
-);
+)
+
+sepGateway.createPayment(invoice);
+
 ```
 
 ### نحوه ی تایید پرداخت
 
 ```
-const verifyTransactionRequest = sepGateway.makeVerifyTransactionRequest(
-    {
-        RefNum:"fake_RefNum"
-    }
-);
+const refNumber = 'REFRENCE_NUMBER_OF_PAYMENT_FROM_SEP';
 
-const verifyTransactionResponse = await sepGateway.verifyTransaction(
-    {
-        verifyTransactionRequest:verifyTransactionRequest
-    }
-);
+sepGateway.verifyPayment(refNumber);
 ```
 
 ### نحوه ی برگشت پرداخت
 
 ```
-const reverseTransactionRequest = sepGateway.makeReverseTransactionRequest(
-    {
-        RefNum: "fake_RefNum"
-    }
-);
-
-const reverseTransactionResponse = await sepGateway.reverseTransaction(
-    {
-        reverseTransactionRequest: reverseTransactionRequest
-    }
-);
+const refNumber = 'REFRENCE_NUMBER_OF_PAYMENT_FROM_SEP';
+sepGateway.reversePayment(refNumber);
 ```
 
-## video process
-
-1. review docuement
-2. create models test
-3. create modesl
-4. create functions test
-5. create functions
 
 ## payment flow
 ```mermaid
@@ -139,8 +111,7 @@ what does this means
 ## Entites
 
 1. invoice
-2. payment
-3. 
+
 
 ## digram creation
 
@@ -148,3 +119,11 @@ what does this means
 
 ## install jest
 1. npm install --save-dev jest
+
+## video process
+
+1. review docuement
+2. create models test
+3. create modesl
+4. create functions test
+5. create functions

@@ -6,7 +6,7 @@ module.exports = function
 (
     {
         httpClientPostInterceptor,
-        SEP_VERIFY_TRANSACTION_URL
+        SEP_VERIFY_TRANSACTION_PATH
     }
 )
     {
@@ -14,7 +14,7 @@ module.exports = function
             {
                 createVerifyTransactionRequest: createVerifyTransactionRequest,
                 httpClientPostInterceptor: httpClientPostInterceptor,
-                SEP_VERIFY_TRANSACTION_URL: SEP_VERIFY_TRANSACTION_URL,
+                SEP_VERIFY_TRANSACTION_PATH: SEP_VERIFY_TRANSACTION_PATH,
                 translateVerifyTransactionResponse: translateVerifyTransactionResponse
 
             }

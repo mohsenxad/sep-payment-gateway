@@ -2,8 +2,7 @@ module.exports = function
 (
     {
         customizedHTTPPostMethod,
-        SEP_TERMINAL_ID,
-        makeInvoice
+        SEP_TERMINAL_ID
     }
 )
     {
@@ -15,13 +14,10 @@ module.exports = function
             }
         );
 
-        const createPayment = require('./create-payment')(
-            {
-                getTokenApi:sepApiServices.getToken,
-                makeInvoice: makeInvoice
-            }
-        );
+        const createPayment = require('./create-payment')(sepApiServices.getToken);
+
         const verifyPayment = require('./verify-payment')(sepApiServices.verifyTransaction);
+
         const reversePayment= require('./reverse-payment')(sepApiServices.reverseTransaction);
 
         const use_cases = Object.freeze(

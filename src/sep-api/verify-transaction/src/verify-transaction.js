@@ -1,7 +1,7 @@
 module.exports = function buildVerifyTransaction
 (
     {
-        SEP_VERIFY_TRANSACTION_URL,
+        SEP_VERIFY_TRANSACTION_PATH,
         httpClientPostInterceptor,
         createVerifyTransactionRequest,
         translateVerifyTransactionResponse
@@ -10,10 +10,10 @@ module.exports = function buildVerifyTransaction
     {
         if
         (
-            !SEP_VERIFY_TRANSACTION_URL
+            !SEP_VERIFY_TRANSACTION_PATH
         )
             {
-                throw new Error('buildVerifyTransaction must have SEP_VERIFY_TRANSACTION_URL.');
+                throw new Error('buildVerifyTransaction must have SEP_VERIFY_TRANSACTION_PATH.');
             }
 
         if
@@ -57,7 +57,7 @@ module.exports = function buildVerifyTransaction
 
                 const { httpResponseJsonData, httpResponseHeaders } = await httpClientPostInterceptor(
                     {
-                        url: SEP_VERIFY_TRANSACTION_URL,
+                        path: SEP_VERIFY_TRANSACTION_PATH,
                         jsonData: verifyTransactionJsonData
                     }
                 );
