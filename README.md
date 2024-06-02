@@ -45,7 +45,21 @@ const invoice = sepGateway.makeInvoice(
     }
 )
 
-sepGateway.createPayment(invoice);
+const payment = await sepGateway.createPayment(invoice);
+```
+
+
+### دریافت محتوای پیج برای ارسال به کاربر
+
+```
+payment.getPaymentRedirectHTMLPage();
+```
+
+
+### دریافت آدرس اینترنتی  برای ارسال به کاربر
+
+```
+payment.getPaymentUrl();
 
 ```
 
@@ -98,15 +112,23 @@ sequenceDiagram
     appServer->>appServer: store payment verification result
 ```
 
-## imporovment
+## imporovment for SEP Gateway
 
-TerminalId in getToken as string
-TerminalNumber in verfiy and reverse as number
+- different data type for same value
 
-status in get token is 1 or -1 as boolean
+    |Mehtod|Parameter|Data Type|
+    |---|---|---|
+    |getToken|TerminalId|string|
+    |verfiy|TerminalNumber|number|
+    |reverse|TerminalNumber|number|
 
-if a transaction reversed before: we get ResultCode as موفق but success as false
-what does this means
+
+- status in get token is 1 or -1 but data type is number insted of boolean
+
+- missleading state:
+
+    if a transaction reversed before: we get ResultCode as موفق but success as false
+    what does this means
 
 ## Entites
 
