@@ -11,15 +11,15 @@
 
 ---
 
-## نحوه ی نصب پکیج
+## 👨‍💻 نحوه ی نصب پکیج
 
 ```
 npm i sep-payment-gatway -s
 ```
 
-## نحوه ی استفاده از پیکج
+## 👨‍💻 نحوه ی استفاده از پیکج
 
-### تعریف گیتوی سامان
+### ⚙️ تعریف گیتوی سامان
 
 ```
 require('dotenv').config();
@@ -33,7 +33,7 @@ const sepGateway = require('./src')(
 console.log(sepGateway);
 ```
 
-### نحوه ی دریافت توکن
+### ⚙️ نحوه ی دریافت توکن
 
 ```
 
@@ -49,21 +49,21 @@ const payment = await sepGateway.createPayment(invoice);
 ```
 
 
-### دریافت محتوای پیج برای ارسال به کاربر
+### ⚙️ دریافت محتوای پیج برای ارسال به کاربر
 
 ```
 payment.getPaymentRedirectHTMLPage();
 ```
 
 
-### دریافت آدرس اینترنتی  برای ارسال به کاربر
+### ⚙️ دریافت آدرس اینترنتی  برای ارسال به کاربر
 
 ```
 payment.getPaymentUrl();
 
 ```
 
-### نحوه ی تایید پرداخت
+### ⚙️ نحوه ی تایید پرداخت
 
 ```
 const refNumber = 'REFRENCE_NUMBER_OF_PAYMENT_FROM_SEP';
@@ -71,7 +71,7 @@ const refNumber = 'REFRENCE_NUMBER_OF_PAYMENT_FROM_SEP';
 sepGateway.verifyPayment(refNumber);
 ```
 
-### نحوه ی برگشت پرداخت
+### ⚙️ نحوه ی برگشت پرداخت
 
 ```
 const refNumber = 'REFRENCE_NUMBER_OF_PAYMENT_FROM_SEP';
@@ -79,7 +79,7 @@ sepGateway.reversePayment(refNumber);
 ```
 
 
-## payment flow
+## 📐 payment flow
 ```mermaid
 sequenceDiagram
     title Payment Flow
@@ -112,7 +112,7 @@ sequenceDiagram
     appServer->>appServer: store payment verification result
 ```
 
-## imporovment for SEP Gateway
+## 💎 imporovment for SEP Gateway
 
 - different data type for same value
 
@@ -130,7 +130,7 @@ sequenceDiagram
     if a transaction reversed before: we get ResultCode as موفق but success as false
     what does this means
 
-## Entites
+## 📦 Entites
 
 1. invoice
 
