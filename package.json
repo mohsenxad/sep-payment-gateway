@@ -1,6 +1,6 @@
 {
   "name": "sep-payment-gatway",
-  "version": "1.0.9",
+  "version": "1.0.11",
   "description": "sep payment gatway",
   "main": "index.js",
   "scripts": {
@@ -23,5 +23,5 @@
   "bugs": {
     "url": "https://github.com/mohsenxad/sep-payment-gateway/issues"
   },
-  "homepage": "https://github.com/rsp/node-caught#readme"
+  "homepage": "https://github.com/mohsenxad/sep-payment-gateway#readme"
 }
