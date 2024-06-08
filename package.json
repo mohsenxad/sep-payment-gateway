@@ -1,15 +1,27 @@
 {
   "name": "sep-payment-gatway",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "description": "sep payment gatway",
   "main": "index.js",
   "scripts": {
     "test": "jest"
   },
-  "keywords": [],
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mohsenxad/sep-payment-gateway.git"
+  },
+  "keywords": [
+    "payment-gateway",
+    "payment",
+    "saman-bank"
+  ],
+  "author": "mohsenXAD <mohsenxad@gmail.com> (https://github.com/mohsenxad)",
   "license": "ISC",
   "devDependencies": {
     "jest": "^28.1.2"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/mohsenxad/sep-payment-gateway/issues"
+  },
+  "homepage": "https://github.com/rsp/node-caught#readme"
 }
