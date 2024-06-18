@@ -11,6 +11,7 @@
 </div>
 
 
+<div align="center" style="font-family:'tahoma';" >
 
 ---
 **برای مطالعه ی جزئیات پیاده سازی صفحه ی ویکی را مشاهده کنید**
@@ -19,22 +20,43 @@
 
 ---
 
+</div>
+
+<div align="right">
+
 ## 👨‍💻 نحوه ی نصب پکیج
 
-```
-npm i sep-payment-gatway -s
-```
+</div>
 
-## 👨‍💻 نحوه ی استفاده از پیکج
-
-### ⚙️ تعریف گیتوی سامان
 
 <div align="left">
 
+```js
+npm i sep-payment-gatway -s
 ```
+
+</div>
+
+
+<div align="right">
+
+## 👨‍💻 نحوه ی استفاده از پیکج
+
+</div>
+
+<div align="right">
+
+### ⚙️ تعریف گیتوی سامان
+
+</div>
+
+<div align="left">
+
+
+```js
 require('dotenv').config();
 
-const sepGateway = require('./src')(
+const sepGateway = require('sep-payment-gatway')(
     {
         SEP_TERMINAL_ID: process.env.SEP_TERMINAL_ID,
     }
@@ -46,70 +68,102 @@ console.log(sepGateway);
 </div>
 
 
+<div align="right">
+
 ### ⚙️ نحوه ی دریافت توکن
 
-<div align="left">
-
-```
-
-const invoice = sepGateway.makeInvoice(
-    {
-        Amount:1000,
-        RedirectURL:'https://<YOUR_SITE_HOST.IR>/<CALL_BACK_PATH>',
-        ResNum:`SEP_TEST_PAYMENT_${Math.floor(Math.random() * 999)}`,
-    }
-)
-
-const payment = await sepGateway.createPayment(invoice);
-```
+متد دریافت توکن پرداخت از درگاه بانک سامان
 
 </div>
 
 
-### ⚙️ دریافت محتوای پیج برای ارسال به کاربر
+[`sepGateway.createPayment`](sepGateway.createPayment)
 
 <div align="left">
 
+🍰 Sample Cdoe:
+
+```js
+try
+    {
+        const invoice = sepGateway.makeInvoice(
+            {
+                Amount:1000,
+                RedirectURL:'https://<YOUR_SITE_HOST.IR>/<CALL_BACK_PATH>',
+                ResNum:`SEP_TEST_PAYMENT_${Math.floor(Math.random() * 999)}`,
+            }
+        );
+
+        const payment = await sepGateway.createPayment(invoice);
+
+        // Continue the process
+
+    }
+catch
+(
+    error
+)
+    {
+        // Handle the error
+    }
+
+
 ```
+
+</div>
+
+<div align="right">
+
+### ⚙️ دریافت محتوای پیج برای ارسال به کاربر
+
+</div>
+
+<div align="left">
+
+```js
 payment.getPaymentRedirectHTMLPage();
 ```
 
 </div>
 
+<div align="right">
+
 ### ⚙️ دریافت آدرس اینترنتی  برای ارسال به کاربر
+
+</div>
 
 <div align="left">
 
-```
+```js
 payment.getPaymentUrl();
 
 ```
 
 </div>
 
+<div align="right">
 
 ### ⏳ انتظار برای پرداخت مشتری
 
+</div>
+
 <div align="right">
 
-در این مرحله مشتری، وارد صفحه ی بانک میشود و مراحل پرداخت را تکمیل میکند. بعد از انجام و حتی  **عدم پرداخت** مشتری ، بانک مشتری را به آدرس  callBack مشخص شده توسط شما در مرحله ی قبل باز خواهند گرداند.
+> ⏳ در این مرحله مشتری، وارد صفحه ی بانک میشود و مراحل پرداخت را تکمیل میکند. بعد از انجام و حتی  **عدم پرداخت** مشتری ، بانک مشتری را به آدرس  callBack مشخص شده توسط شما در مرحله ی قبل باز خواهند گرداند.
 
-منتظر دریافت پاسخ از بانک باشید و اطلاعات ارسال شده توسط بانک را با دقت بررسی کنید. 
+> ⏳ منتظر دریافت پاسخ از بانک باشید و اطلاعات ارسال شده توسط بانک را با دقت بررسی کنید. 
 
-اطلاعات refNumber در این مرحله دریافت میشود. در مراحل بعدی این اطلاعات مورد نیاز میباشد.
+> 💾 اطلاعات refNumber در این مرحله دریافت میشود. در مراحل بعدی این اطلاعات مورد نیاز میباشد.
 
-
-**☠️ مدیریت و بررسی اطلاعات دریافت شده در آدرس کال بک از مهمترین و خطرناکترین مراحل پرداخت میباشد.
+> **☠️ مدیریت و بررسی اطلاعات دریافت شده در آدرس کال بک از مهمترین و خطرناکترین مراحل پرداخت میباشد.
 مراقب این مرحله باشید.**
 
-**⚠️ آدرس callBack باید به یک Function با مشخصات [idempotent](https://dev.to/hzoltan/what-is-an-idempotent-function-2hkn) باشد.**
+> **🔥 آدرس callBack باید به یک Function با مشخصات [idempotent](https://dev.to/hzoltan/what-is-an-idempotent-function-2hkn) باشد.**
 
-- 🏴‍☠️مراقب تکرار درخواست روی این آدرس باشید.
-- 🏴‍☠️مراقب ارسال درخواست پشت سر هم در چند میلی ثانیه روی آدرس callBack باشید.
-- 🏴‍☠️اطلاعات دریافت شده روی آدرس callBack را به صورت درجا در بانک اطلاعاتی ذخیره کنید.
-- 🏴‍☠️وضعیت پرداخت را در لحظه به حالت در حال پردازش ، در بانک اطلاعاتی  تغییر دهید.
-
-
+> - 🏴‍☠️مراقب تکرار درخواست روی این آدرس باشید.
+> - 🏴‍☠️مراقب ارسال درخواست پشت سر هم در چند میلی ثانیه روی آدرس callBack باشید.
+> - 🏴‍☠️اطلاعات دریافت شده روی آدرس callBack را به صورت درجا در بانک اطلاعاتی ذخیره کنید.
+> - 🏴‍☠️وضعیت پرداخت را در لحظه به حالت در حال پردازش ، در بانک اطلاعاتی  تغییر دهید.
 
 ---
 
@@ -126,12 +180,21 @@ payment.getPaymentUrl();
 
 </div>
 
+<div align="right">
 
 ### ⚙️ نحوه ی تایید پرداخت
 
+متد تایید و تثبیت پرداخت بانک سامان
+
+</div>
+
+[`sepGateway.verifyPayment`](https://github.com/mohsenxad/sep-payment-gateway/tree/c8a8608c48043daa0aba242145d889fcad931b57/src/use-cases/verify-payment)
+
 <div align="left">
 
-```
+🍰 Sample Cdoe:
+
+```js
 const refNumber = 'REFRENCE_NUMBER_OF_PAYMENT_FROM_SEP';
 
 sepGateway.verifyPayment(refNumber);
@@ -139,12 +202,21 @@ sepGateway.verifyPayment(refNumber);
 
 </div>
 
+<div align="right">
 
 ### ⚙️ نحوه ی برگشت پرداخت
 
+متد بازپرداخت بانک سامان
+
+</div>
+
+[`sepGateway.reversePayment`](https://github.com/mohsenxad/sep-payment-gateway/tree/c8a8608c48043daa0aba242145d889fcad931b57/src/use-cases/verify-payment)
+
 <div align="left">
 
-```
+🍰 Sample Cdoe:
+
+```js
 const refNumber = 'REFRENCE_NUMBER_OF_PAYMENT_FROM_SEP';
 sepGateway.reversePayment(refNumber);
 ```
@@ -152,6 +224,13 @@ sepGateway.reversePayment(refNumber);
 </div>
 
 ## 📐 payment flow
+
+<div align="right">
+
+برای مشاهده ی این دیاگرام نیاز به پلاگین  [mermaid](https://mermaid.js.org/syntax/sequenceDiagram.html) دارید.
+
+</div>
+
 ```mermaid
 sequenceDiagram
     title Payment Flow
@@ -184,7 +263,12 @@ sequenceDiagram
     appServer->>appServer: store payment verification result
 ```
 
-## 💎 imporovment for SEP Gateway
+<div align="right">
+
+## 💎 پیشنهادات مربوط به بهینه کردن گیت وی سامان
+
+</div>
+
 
 - 🤷‍♂️ Different data type for same value
 
@@ -202,16 +286,19 @@ sequenceDiagram
     if a transaction reversed before: we get ResultCode as موفق but success as false
     what does this means
 
+
 ## 📦 Entites
 
-1. invoice
+1. [`invoice`](https://github.com/mohsenxad/sep-payment-gateway/blob/c8a8608c48043daa0aba242145d889fcad931b57/src/entities/invoice.js)
 
 
-## digram creation
+## Maintainers
 
-[mermaid](https://mermaid.js.org/syntax/sequenceDiagram.html)
+- [mohsenXAD](https://github.com/mohsenxad)
+
 
 ## install jest
+
 1. npm install --save-dev jest
 
 ## video process

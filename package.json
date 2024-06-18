@@ -1,6 +1,6 @@
 {
   "name": "sep-payment-gatway",
-  "version": "1.0.11",
+  "version": "1.0.17",
   "description": "sep payment gatway",
   "main": "index.js",
   "scripts": {
